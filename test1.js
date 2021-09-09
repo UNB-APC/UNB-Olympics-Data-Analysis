@@ -1,1 +1,0 @@
-var grafico = 'Países'
