@@ -1,0 +1,2 @@
+a = "Testando..."
+print(a)
