@@ -20,7 +20,7 @@ for linha in dados.values:
         continue
     sigla = linha[7]
     medalha = linha[14]
-    ano = linha[9]
+    ano = linha[8]
 
     if agrupadoPorAno.get(ano) == None:
         agrupadoPorAno[ano] = {}
