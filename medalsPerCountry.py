@@ -1,3 +1,4 @@
+from numpy import true_divide
 from pandas import read_csv
 
 from dash.dependencies import Input, Output
@@ -57,12 +58,12 @@ for ano in anos:
                 prataTotal += 1
                 continue
             bronzeTotal += 1
-            dataFrameObject["ano"].append(ano)
-            dataFrameObject["sigla"].append(pais)
-            dataFrameObject["Medalhas totais"].append(medalhaTotal)
-            dataFrameObject["Medalhas de ouro"].append(ouroTotal)
-            dataFrameObject["Medalhas de prata"].append(prataTotal)
-            dataFrameObject["Medalhas de bronze"].append(bronzeTotal)
+        dataFrameObject["ano"].append(ano)
+        dataFrameObject["sigla"].append(pais)
+        dataFrameObject["Medalhas totais"].append(medalhaTotal)
+        dataFrameObject["Medalhas de ouro"].append(ouroTotal)
+        dataFrameObject["Medalhas de prata"].append(prataTotal)
+        dataFrameObject["Medalhas de bronze"].append(bronzeTotal)
 
 
 app = Dash(__name__)
@@ -84,7 +85,7 @@ app.layout = html.Div(
         ),
         html.Main(
             children=[
-                html.H1("Média do IMC por país", className="title"),
+                html.H1("Medalhas por país", className="title"),
                 html.Section(
                     [
                         dcc.Dropdown(
@@ -123,19 +124,24 @@ def updateGraph(selectedYear):
             df["sigla"].append(copy["sigla"][index])
             df["Medalhas totais"].append(copy["Medalhas totais"][index])
 
-    figure = px.choropleth_mapbox(
+    figure = px.choropleth(
         df,
         locations="sigla",
         color="Medalhas totais",
         hover_name="sigla",
         width=1200,
         height=675,
-        mapbox_style="satellite-streets",
     )
+    # layout = figure.layout
+    # layout["paper_bgcolor"] = "#F7F8FA"
+    # layout["plot_bgcolor"] = "#F7F8FA"
 
-    layout = figure.layout
-    layout["paper_bgcolor"] = "#F7F8FA"
-    layout["plot_bgcolor"] = "#F7F8FA"
+    figure.update_geos(
+        coastlinecolor="#610059",
+        showocean=True,
+        oceancolor="#b7ddf4",
+        landcolor="#f7f8fa",
+    )
 
     return figure
 
