@@ -29,7 +29,7 @@ csvDataFrame = read_csv('dados/athlete_events.csv', delimiter=',')
 # Group data by Year
 # ------------------------------------------------------------
 nocIMCGroupedByYear = {}
-readedIdsnocIMCGroupedByYear = {}
+readedIdsGroupedByYear = {}
 for cells in csvDataFrame.values:
   athleteId = cells[0]
   noc = cells[7] # ISO Country Value
@@ -41,9 +41,9 @@ for cells in csvDataFrame.values:
   if isnan(height) or isnan(weight):
     continue
 
-  if readedIdsnocIMCGroupedByYear.get(year) == None:
-    readedIdsnocIMCGroupedByYear[year] = set()
-  elif athleteId in readedIdsnocIMCGroupedByYear[year]:
+  if readedIdsGroupedByYear.get(year) == None:
+    readedIdsGroupedByYear[year] = set()
+  elif athleteId in readedIdsGroupedByYear[year]:
     continue
 
   if nocIMCGroupedByYear.get(year) == None:
@@ -53,7 +53,7 @@ for cells in csvDataFrame.values:
 
   imc = weight/((height/100)**2)
   nocIMCGroupedByYear[year][noc].append({"imc": imc, "team": team})
-  readedIdsnocIMCGroupedByYear[year].add(athleteId)
+  readedIdsGroupedByYear[year].add(athleteId)
 # ------------------------------------------------------------
 
 # List All Years
