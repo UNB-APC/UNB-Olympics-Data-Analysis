@@ -32,7 +32,6 @@ for linha in dados.values:
 anos = list(agrupadoPorAno.keys())
 anos.sort()
 
-
 dataFrameObject = {
     "ano": [],
     "sigla": [],
@@ -89,7 +88,8 @@ app.layout = html.Div(
                     [
                         dcc.Dropdown(
                             id="selectedYear",
-                            options=[{"label": str(ano), "value": ano} for ano in anos],
+                            options=[{"label": str(ano), "value": ano}
+                                     for ano in anos],
                             value=anos[0],
                             style={"width": "100px"},
                         ),
@@ -123,14 +123,13 @@ def updateGraph(selectedYear):
             df["sigla"].append(copy["sigla"][index])
             df["Medalhas totais"].append(copy["Medalhas totais"][index])
 
-    figure = px.choropleth_mapbox(
+    figure = px.choropleth(
         df,
         locations="sigla",
         color="Medalhas totais",
         hover_name="sigla",
         width=1200,
         height=675,
-        mapbox_style="satellite-streets",
     )
 
     layout = figure.layout
