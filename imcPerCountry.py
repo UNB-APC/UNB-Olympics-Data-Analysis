@@ -4,13 +4,10 @@ from dash.dependencies import Input, Output
 from pandas import read_csv
 import plotly.express as px
 
-from dash import Dash
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import Dash, html, dcc
 
 # Read data
 csvDataFrame = read_csv('dados/athlete_events.csv', delimiter=',')
-print(csvDataFrame)
 '''
 0  'ID',
 1  'Name',
@@ -31,48 +28,59 @@ print(csvDataFrame)
 
 # Group data by Year
 # ------------------------------------------------------------
-groupedByYear = {}
+nocIMCGroupedByYear = {}
+readedIdsnocIMCGroupedByYear = {}
 for cells in csvDataFrame.values:
-  if isnan(cells[4]) or isnan(cells[5]):
-    continue
-
-  year = cells[9] # Ano
+  athleteId = cells[0]
   noc = cells[7] # ISO Country Value
   team = cells[6] # Team Name
-  height = cells[4]/100 # Centimeters to meters
+  height = cells[4] # Altura em centimetros
   weight = cells[5] # Peso
-  imc = weight/(height**2)
+  year = cells[9] # Ano
 
-  if groupedByYear.get(year) == None:
-    groupedByYear[year] = {}
-  if groupedByYear[year].get(noc) == None:
-    groupedByYear[year][noc] = []
+  if isnan(height) or isnan(weight):
+    continue
 
-  groupedByYear[year][noc].append({"imc": imc, "team": team})
+  if readedIdsnocIMCGroupedByYear.get(year) == None:
+    readedIdsnocIMCGroupedByYear[year] = set()
+  elif athleteId in readedIdsnocIMCGroupedByYear[year]:
+    continue
+
+  if nocIMCGroupedByYear.get(year) == None:
+    nocIMCGroupedByYear[year] = {}
+  if nocIMCGroupedByYear[year].get(noc) == None:
+    nocIMCGroupedByYear[year][noc] = []
+
+  imc = weight/((height/100)**2)
+  nocIMCGroupedByYear[year][noc].append({"imc": imc, "team": team})
+  readedIdsnocIMCGroupedByYear[year].add(athleteId)
 # ------------------------------------------------------------
 
 # List All Years
 # ------------------------------------------------------------
-years = list(groupedByYear.keys())
+years = [year for year in nocIMCGroupedByYear]
 years.sort()
 # ------------------------------------------------------------
 
 
 # Create The Main DataFrame
 # ------------------------------------------------------------
-dataFrameObject = {'team':[], 'year':[], 'imcAverage': [], 'noc': []}
+dataFrameGroupedByYear = {}
 for year in years:
-  for noc in groupedByYear[year]:
+  for noc in nocIMCGroupedByYear[year]:
     imcSum = 0
-    for data in groupedByYear[year][noc]:
+    for data in nocIMCGroupedByYear[year][noc]:
       imcSum += data["imc"]
 
-    imcAverage = imcSum / len(groupedByYear[year][noc])
+    imcAverage = imcSum / len(nocIMCGroupedByYear[year][noc])
 
-    dataFrameObject['year'].append(year)
-    dataFrameObject['noc'].append(noc)
-    dataFrameObject['team'].append(groupedByYear[year][noc][0]["team"])
-    dataFrameObject['imcAverage'].append(imcAverage)
+    if dataFrameGroupedByYear.get(year) == None:
+      dataFrameGroupedByYear[year] = {'team':[], 'year':[], 'imcAverage': [], 'noc': []}
+    
+    dataFrameGroupedByYear[year]['year'].append(year)
+    dataFrameGroupedByYear[year]['noc'].append(noc)
+    dataFrameGroupedByYear[year]['team'].append(nocIMCGroupedByYear[year][noc][0]["team"])
+    dataFrameGroupedByYear[year]['imcAverage'].append(imcAverage)
 # ------------------------------------------------------------
 
 
@@ -117,7 +125,7 @@ app.layout = html.Div(
               children=[
                 dcc.Graph(
                   id="graph",
-                  figure=[],
+                  figure=px.choropleth(),
                 ),
 
                 html.Div(
@@ -164,14 +172,7 @@ ISOCountries = ["ABW","AFG","AGO","AIA","ALA","ALB","AND","ARE","ARG","ARM","ASM
   [Input(component_id="selectedYear", component_property="value")]
 )
 def updateGraph(selectedYear):
-  copy = dataFrameObject.copy()
-  df = {"team":[], "imcAverage": [], "noc": []}
-
-  for index in range(len(copy["year"])):
-    if copy["year"][index] == selectedYear:
-      df["noc"].append(copy["noc"][index])
-      df["imcAverage"].append(copy["imcAverage"][index])
-      df["team"].append(copy["team"][index])
+  df = dataFrameGroupedByYear[selectedYear]
 
   figure = px.choropleth(
     df,
