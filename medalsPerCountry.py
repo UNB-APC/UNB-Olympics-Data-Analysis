@@ -1,3 +1,4 @@
+from numpy import true_divide
 from pandas import read_csv
 
 from dash.dependencies import Input, Output
@@ -19,7 +20,7 @@ for linha in dados.values:
         continue
     sigla = linha[7]
     medalha = linha[14]
-    ano = linha[9]
+    ano = linha[8]
 
     if agrupadoPorAno.get(ano) == None:
         agrupadoPorAno[ano] = {}
@@ -56,12 +57,12 @@ for ano in anos:
                 prataTotal += 1
                 continue
             bronzeTotal += 1
-            dataFrameObject["ano"].append(ano)
-            dataFrameObject["sigla"].append(pais)
-            dataFrameObject["Medalhas totais"].append(medalhaTotal)
-            dataFrameObject["Medalhas de ouro"].append(ouroTotal)
-            dataFrameObject["Medalhas de prata"].append(prataTotal)
-            dataFrameObject["Medalhas de bronze"].append(bronzeTotal)
+        dataFrameObject["ano"].append(ano)
+        dataFrameObject["sigla"].append(pais)
+        dataFrameObject["Medalhas totais"].append(medalhaTotal)
+        dataFrameObject["Medalhas de ouro"].append(ouroTotal)
+        dataFrameObject["Medalhas de prata"].append(prataTotal)
+        dataFrameObject["Medalhas de bronze"].append(bronzeTotal)
 
 
 app = Dash(__name__)
@@ -83,7 +84,7 @@ app.layout = html.Div(
         ),
         html.Main(
             children=[
-                html.H1("Média do IMC por país", className="title"),
+                html.H1("Medalhas por país", className="title"),
                 html.Section(
                     [
                         dcc.Dropdown(
@@ -91,7 +92,7 @@ app.layout = html.Div(
                             options=[{"label": str(ano), "value": ano}
                                      for ano in anos],
                             value=anos[0],
-                            style={"width": "100px"},
+                            style={"width": "200px"},
                         ),
                         dcc.Graph(
                             id="graph",
@@ -131,10 +132,16 @@ def updateGraph(selectedYear):
         width=1200,
         height=675,
     )
+    # layout = figure.layout
+    # layout["paper_bgcolor"] = "#F7F8FA"
+    # layout["plot_bgcolor"] = "#F7F8FA"
 
-    layout = figure.layout
-    layout["paper_bgcolor"] = "#F7F8FA"
-    layout["plot_bgcolor"] = "#F7F8FA"
+    figure.update_geos(
+        coastlinecolor="#610059",
+        showocean=True,
+        oceancolor="#b7ddf4",
+        landcolor="#f7f8fa",
+    )
 
     return figure
 
