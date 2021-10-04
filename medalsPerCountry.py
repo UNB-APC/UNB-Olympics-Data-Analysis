@@ -181,4 +181,4 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
 # ------------------------------------------------------------
 # Running Server
 # ------------------------------------------------------------
-app.run_server()
+app.run_server(port=3005)

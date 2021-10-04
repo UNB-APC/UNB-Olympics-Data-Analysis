@@ -109,4 +109,4 @@ def atualizarGrafico(anoSelecionado, ordemSelecionada):
   grafico = px.bar(df, x="nome", y="imc")
   return grafico
 
-app.run_server()
+app.run_server(port=3003)
