@@ -39,6 +39,7 @@ for linha in dados_csv.values:
         maiores_medalhistas[nome]= {'Gold': 0, 'Silver': 0, 'Bronze': 0}
     
     maiores_medalhistas[nome][medalha]+=1
+    
 
 # Ordenando e pegando os 50 maiores medalhistas
 
@@ -98,7 +99,7 @@ def atualizar_grafico(ano_selecionado):
     
     df = {'nome' : [], 'Gold' : [], 'Silver' : [], 'Bronze' : []}  
 
-    for nome, medalhas in zip(copia.keys(), copia.values()):    
+    for nome, medalhas in zip(copia.keys(), copia.values()): # O zip permite percorrer duas listas com duas variaveis, nome: copia.keys() e medalhas: copia.values()    
         df['nome'].append(nome)
         df['Gold'].append(medalhas['Gold'])
         df['Silver'].append(medalhas['Silver'])
