@@ -6,7 +6,7 @@ from dash import dcc
 from dash.dependencies import Input, Output
 
 # Leitura dos dados
-dados_csv = pd.read_csv("athlete_events.csv")
+dados_csv = pd.read_csv("dados/athlete_events.csv")
 
 #ID[0],"Name"[1],"Sex"[2],"Age"[3],"Height"[4],"Weight"[5],"Team"[6],
 # "NOC"[7],"Games"[8],"Year"[9],"Season"[10],"City"[11],"Sport"[12],
@@ -47,7 +47,6 @@ for linha in dados_csv.values:
 # O método 'sorted()' vai devolver uma lista de tuplas, então depois de ser fatiada para pegar os 50 maiores(primeiros) medalhistas, ela será transformada em um dicionário pelo método 'dict()'.
 
 maiores_medalhistas = dict(sorted(maiores_medalhistas.items(), key  = lambda item: (item[1]['Gold'], item[1]['Silver'], item[1]['Bronze']), reverse=True)[:50])      
-
 
 # Ordena as chaves do dicionário 'agrupado_por_ano'.
 
@@ -117,4 +116,4 @@ def atualizar_grafico(ano_selecionado):
     return figure
     
 
-app.run_server()
+app.run_server(port=3004)

@@ -29,8 +29,12 @@ dados = read_csv(
 14 'Medal'
 '''
 
+
+# sigla 7, medelha 14
+
 agrupadoPorAno = {}  # DICT QUE ARMAZENA OS DAOS AGRUPADOS PELOS ANOS
 # sigla 7, medelha 14 , temporada 8
+
 for linha in dados.values:
     if linha[14] == "NA":  # CASO RETORNE "NA" ELE IGNORA E CONTINUA
         continue
@@ -134,7 +138,6 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
     df = {
         "sigla": [],
         "Medalhas totais": [],
-        "Medalhas totais": [],
         "Medalhas de ouro": [],
         "Medalhas de prata": [],
         "Medalhas de bronze": [],
@@ -176,4 +179,4 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
 # ------------------------------------------------------------
 # Running Server
 # ------------------------------------------------------------
-app.run_server()
+app.run_server(port=3005)
