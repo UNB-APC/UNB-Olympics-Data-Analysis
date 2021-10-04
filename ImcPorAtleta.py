@@ -7,7 +7,7 @@ from dash import Dash
 import dash_html_components as html
 import dash_core_components as dcc
 
-dados = read_csv("athlete_events.csv", delimiter = ",") #ler dados
+dados = read_csv("dados/athlete_events.csv", delimiter = ",") #ler dados
 
 # "ID"[0],
 # "Name"[1],
