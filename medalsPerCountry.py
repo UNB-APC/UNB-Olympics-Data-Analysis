@@ -89,8 +89,7 @@ app.layout = html.Div(
                     [
                         dcc.Dropdown(
                             id="selectedYear",
-                            options=[{"label": str(ano), "value": ano}
-                                     for ano in anos],
+                            options=[{"label": str(ano), "value": ano} for ano in anos],
                             value=anos[0],
                             style={"width": "200px"},
                         ),
@@ -135,11 +134,11 @@ def updateGraph(selectedYear):
         color="Medalhas totais",
         color_continuous_scale="Viridis",
         hover_name="sigla",
-        hover_data={
-            "Medalhas de ouro",
+        hover_data=[
             "Medalhas de bronze",
             "Medalhas de prata",
-        },
+            "Medalhas de ouro",
+        ],
         width=1200,
         height=675,
     )
