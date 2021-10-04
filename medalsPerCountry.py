@@ -1,10 +1,10 @@
-from numpy import true_divide
 from pandas import read_csv
 
 from dash.dependencies import Input, Output
 
 import plotly.express as px
 from dash import Dash, html, dcc
+
 
 dados = read_csv(
     "dados/athlete_events.csv",
@@ -92,7 +92,7 @@ app.layout = html.Div(
                             id="selectedYear",
                             options=[{"label": str(ano), "value": ano} for ano in anos],
                             value=anos[0],
-                            style={"width": "100px"},
+                            style={"width": "200px"},
                         ),
                         dcc.Graph(
                             id="graph",
@@ -105,11 +105,6 @@ app.layout = html.Div(
     ],
 )
 
-colors = [
-    "#f0f821",
-    "#0d0887",
-]
-
 
 @app.callback(
     Output(component_id="graph", component_property="figure"),
@@ -117,28 +112,41 @@ colors = [
 )
 def updateGraph(selectedYear):
     copy = dataFrameObject.copy()
-    df = {"sigla": [], "Medalhas totais": []}  # verificar a variavel
+    df = {
+        "sigla": [],
+        "Medalhas totais": [],
+        "Medalhas totais": [],
+        "Medalhas de ouro": [],
+        "Medalhas de prata": [],
+        "Medalhas de bronze": [],
+    }
 
     for index in range(len(copy["ano"])):
         if copy["ano"][index] == selectedYear:
             df["sigla"].append(copy["sigla"][index])
             df["Medalhas totais"].append(copy["Medalhas totais"][index])
+            df["Medalhas de ouro"].append(copy["Medalhas de ouro"][index])
+            df["Medalhas de prata"].append(copy["Medalhas de prata"][index])
+            df["Medalhas de bronze"].append(copy["Medalhas de bronze"][index])
 
     figure = px.choropleth(
         df,
         locations="sigla",
         color="Medalhas totais",
+        color_continuous_scale="Viridis",
         hover_name="sigla",
+        hover_data={
+            "Medalhas de ouro",
+            "Medalhas de bronze",
+            "Medalhas de prata",
+        },
         width=1200,
         height=675,
     )
-    # layout = figure.layout
-    # layout["paper_bgcolor"] = "#F7F8FA"
-    # layout["plot_bgcolor"] = "#F7F8FA"
 
     figure.update_geos(
-        coastlinecolor="#610059",
         showocean=True,
+        coastlinecolor="#610059",
         oceancolor="#b7ddf4",
         landcolor="#f7f8fa",
     )
@@ -147,8 +155,6 @@ def updateGraph(selectedYear):
 
 
 # ------------------------------------------------------------
-
-
 # Running Server
 # ------------------------------------------------------------
 app.run_server()
