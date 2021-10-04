@@ -3,9 +3,7 @@ from dash.dependencies import Input, Output
 
 from pandas import read_csv
 import plotly.express as px
-from dash import Dash
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import Dash, html, dcc
 
 dados = read_csv("dados/athlete_events.csv", delimiter = ",") #ler dados
 
