@@ -33,7 +33,6 @@ for linha in dados.values:
 anos = list(agrupadoPorAno.keys())
 anos.sort()
 
-
 dataFrameObject = {
     "ano": [],
     "sigla": [],
@@ -90,7 +89,8 @@ app.layout = html.Div(
                     [
                         dcc.Dropdown(
                             id="selectedYear",
-                            options=[{"label": str(ano), "value": ano} for ano in anos],
+                            options=[{"label": str(ano), "value": ano}
+                                     for ano in anos],
                             value=anos[0],
                             style={"width": "200px"},
                         ),
