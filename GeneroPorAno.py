@@ -135,7 +135,11 @@ def updateGraph(selectedSeason):
     grafico.add_trace(go.Scatter(x=df["Ano"], y=df["Mulheres"], name = "Mulheres"))
     grafico.update_layout(width=1200, height=675)
     return grafico
+<<<<<<< HEAD:GeneroPorAno.py
 
 app.run_server()
 #rodando o gráfico no dash
+=======
+app.run_server(port=3001)
+>>>>>>> 3785933dc146dc4e1205d240c122722778c79740:GenderPerYear.py
     

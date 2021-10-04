@@ -40,6 +40,7 @@ for linha in dados_csv.values:
     
     maiores_medalhistas[nome][medalha]+=1
 
+
 # Ordenando e pegando os 50 maiores medalhistas
 
 # O método 'items()' devolve tuplas das chaves e valores de um dicionário, a função do sorted os ordena de acordo com a quantidade de medalhas em ordem decrescente.
@@ -76,7 +77,7 @@ app.layout = html.Div(
                         dcc.Graph(
                             id = "grafico",
                             figure = [],
-                            style = {'height' : '70%','width': '100%'}        
+                            style = {'height' : '95%','width': '100%'}        
                         )
                     ]
         )
@@ -98,7 +99,7 @@ def atualizar_grafico(ano_selecionado):
     
     df = {'nome' : [], 'Gold' : [], 'Silver' : [], 'Bronze' : []}  
 
-    for nome, medalhas in zip(copia.keys(), copia.values()):    
+    for nome, medalhas in zip(copia.keys(), copia.values()): # O zip permite percorrer duas listas com duas variaveis, nome: copia.keys() e medalhas: copia.values()    
         df['nome'].append(nome)
         df['Gold'].append(medalhas['Gold'])
         df['Silver'].append(medalhas['Silver'])
@@ -116,4 +117,4 @@ def atualizar_grafico(ano_selecionado):
     return figure
     
 
-app.run_server()
+app.run_server(port=3004)

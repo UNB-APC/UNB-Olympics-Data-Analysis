@@ -11,7 +11,6 @@ dados = read_csv(
     na_values=["_"],
 )  # LÊ OS DADOS
 
-
 '''
 0  'ID',
 1  'Name',
@@ -139,7 +138,6 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
     df = {
         "sigla": [],
         "Medalhas totais": [],
-        "Medalhas totais": [],
         "Medalhas de ouro": [],
         "Medalhas de prata": [],
         "Medalhas de bronze": [],
@@ -181,4 +179,4 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
 # ------------------------------------------------------------
 # Running Server
 # ------------------------------------------------------------
-app.run_server()
+app.run_server(port=3005)
