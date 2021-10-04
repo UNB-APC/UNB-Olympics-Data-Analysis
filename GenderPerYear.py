@@ -117,5 +117,5 @@ def updateGraph(selectedSeason): # selectedSeason pode ser Winter ou Summer
     grafico.add_trace(go.Scatter(x=df["Ano"], y=df["Mulheres"], name = "Mulheres"))
     grafico.update_layout(width=1200, height=675)
     return grafico
-app.run_server()
+app.run_server(port=3001)
     

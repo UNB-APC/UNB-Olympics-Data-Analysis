@@ -221,5 +221,5 @@ def atualizarGrafico(anoSelecionado): # Função que atualiza o grafico, será c
 
 # Running Server
 # ------------------------------------------------------------
-app.run_server() # Roda o servidor "Flask" do Dash
+app.run_server(port=3002) # Roda o servidor "Flask" do Dash
 # ------------------------------------------------------------

@@ -116,4 +116,4 @@ def atualizar_grafico(ano_selecionado):
     return figure
     
 
-app.run_server()
+app.run_server(port=3004)
