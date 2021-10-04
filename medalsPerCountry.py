@@ -139,7 +139,6 @@ def updateGraph(selectedYear):  # SELECIONA O ANO
     df = {
         "sigla": [],
         "Medalhas totais": [],
-        "Medalhas totais": [],
         "Medalhas de ouro": [],
         "Medalhas de prata": [],
         "Medalhas de bronze": [],
