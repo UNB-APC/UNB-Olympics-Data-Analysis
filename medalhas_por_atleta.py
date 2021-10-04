@@ -39,7 +39,7 @@ for linha in dados_csv.values:
         maiores_medalhistas[nome]= {'Gold': 0, 'Silver': 0, 'Bronze': 0}
     
     maiores_medalhistas[nome][medalha]+=1
-    
+
 
 # Ordenando e pegando os 50 maiores medalhistas
 
@@ -77,7 +77,7 @@ app.layout = html.Div(
                         dcc.Graph(
                             id = "grafico",
                             figure = [],
-                            style = {'height' : '70%','width': '100%'}        
+                            style = {'height' : '95%','width': '100%'}        
                         )
                     ]
         )
