@@ -1,4 +1,3 @@
-from os import name
 from pandas import read_csv #importação do leitor de dados
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output
@@ -7,6 +6,24 @@ from dash import Dash, html, dcc
 dados = read_csv("dados/athlete_events.csv", delimiter = ",")
 
 agruparporano = {}
+
+'''
+0  'ID',
+1  'Name',
+2  'Sex',
+3  'Age',
+4  'Height',
+5  'Weight',
+6  'Team',
+7  'NOC',
+8  'Games',
+9  'Year',
+10 'Season',
+11 'City',
+12 'Sport',
+13 'Event',
+14 'Medal'
+'''
 
 idsLidos = set()
 for linha in dados.values: #atribuir sexo aos anos 
@@ -26,8 +43,6 @@ for linha in dados.values: #atribuir sexo aos anos
 anos = list(agruparporano.keys())
 anos.sort()
 
-summerDataFrame = {"Ano":[],"Homens":[], "Mulheres":[]}
-winterDataFrame = {"Ano":[],"Homens":[], "Mulheres":[]}
 
 seasonsDataFrame = {
     "Summer": {"Ano":[],"Homens":[], "Mulheres":[]},

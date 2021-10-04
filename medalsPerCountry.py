@@ -13,6 +13,24 @@ dados = read_csv(
     na_values=["_"],
 )
 
+'''
+0  'ID',
+1  'Name',
+2  'Sex',
+3  'Age',
+4  'Height',
+5  'Weight',
+6  'Team',
+7  'NOC',
+8  'Games',
+9  'Year',
+10 'Season',
+11 'City',
+12 'Sport',
+13 'Event',
+14 'Medal'
+'''
+
 agrupadoPorAno = {}
 # sigla 7, medelha 14
 for linha in dados.values:
