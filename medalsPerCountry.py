@@ -1,17 +1,16 @@
-from pandas import read_csv
-
+from pandas import read_csv  # IMPORTA O LEITOR DE BANCO DE DADOS
+# IMPORTA A CALLBACK QUE ATUALIZA O GRAFICO
 from dash.dependencies import Input, Output
-
-import plotly.express as px
-from dash import Dash, html, dcc
-
+import plotly.express as px  # MODULO PARA CRIAR O GRAFICO
+from dash import Dash, html, dcc  # IMPORTA A PAGINA WEB
 
 dados = read_csv(
     "dados/athlete_events.csv",
     delimiter=",",
     keep_default_na=False,
     na_values=["_"],
-)
+)  # LÊ OS DADOS
+
 
 '''
 0  'ID',
@@ -31,27 +30,33 @@ dados = read_csv(
 14 'Medal'
 '''
 
-agrupadoPorAno = {}
-# sigla 7, medelha 14
-for linha in dados.values:
-    if linha[14] == "NA":
-        continue
-    sigla = linha[7]
-    medalha = linha[14]
-    ano = linha[8]
 
+# sigla 7, medelha 14
+
+agrupadoPorAno = {}  # DICT QUE ARMAZENA OS DAOS AGRUPADOS PELOS ANOS
+# sigla 7, medelha 14 , temporada 8
+
+for linha in dados.values:
+    if linha[14] == "NA":  # CASO RETORNE "NA" ELE IGNORA E CONTINUA
+        continue
+    sigla = linha[7]  # ATRIBUI A SIGLA ALOCADA NA POSIÇÃO 7
+    medalha = linha[14]  # ATRIBUI AS MEDALHAS ALOCADAS NA POSIÇÃO 14
+    ano = linha[8]  # ATRIBUI O ANO  ALOCADO NA POSIÇÃO 8
+
+    # VERIFIACAR SE ANO JÁ EXISTE, CRIA CASO NAO EXISTA
     if agrupadoPorAno.get(ano) == None:
         agrupadoPorAno[ano] = {}
+    # VERIFICAR SE SIGLA JÁ EXISTE, CRIA CASO NAO EXISTA
     if agrupadoPorAno[ano].get(sigla) == None:
         agrupadoPorAno[ano][sigla] = []
 
-    agrupadoPorAno[ano][sigla].append(medalha)
+    agrupadoPorAno[ano][sigla].append(medalha)  # ADICIONA MEDALHA AO ARRAY
 
 
-anos = list(agrupadoPorAno.keys())
-anos.sort()
+anos = list(agrupadoPorAno.keys())  # PEGA TODOS OS ANOS
+anos.sort(reverse=True)  # ORGANIZA EM ORDEM CRESCENTE
 
-dataFrameObject = {
+dataFrameObject = {  # ONDE SERÁ ARMAZENADO OS DADOS EM ORDEM
     "ano": [],
     "sigla": [],
     "Medalhas totais": [],
@@ -60,22 +65,23 @@ dataFrameObject = {
     "Medalhas de bronze": [],
 }
 
-for ano in anos:
-    for pais in agrupadoPorAno[ano]:
+for ano in anos:  # PERCORRE CADA ANO
+    for pais in agrupadoPorAno[ano]:  # PERCORRE CADA PAIS EM CADA ANO
         ouroTotal = 0
         bronzeTotal = 0
         prataTotal = 0
         medalhaTotal = 0
+        # PERCORRE AS MEDALHAS DE CADA PAÍS EM CADA ANO
         for medalha in agrupadoPorAno[ano][pais]:
             medalhaTotal += 1
-            if medalha == "Gold":
+            if medalha == "Gold":  # CASO A MEDALHA SEJA DE OURO, ADICIONA 1 A MEDALHAS DE OURO
                 ouroTotal += 1
                 continue
-            if medalha == "Silver":
+            if medalha == "Silver":  # CASO A MEDALHA SEJA DE PRATA, ADICIONA 1 A MEDALHAS DE PRATAS
                 prataTotal += 1
                 continue
-            bronzeTotal += 1
-        dataFrameObject["ano"].append(ano)
+            bronzeTotal += 1  # CASO A MEDALHA NÃO SEJE DE OURO OU DE PRATA ELA ENTRA COMO BRONZE
+        dataFrameObject["ano"].append(ano)  # COLOCA O VALOR NO DATAFRAME
         dataFrameObject["sigla"].append(pais)
         dataFrameObject["Medalhas totais"].append(medalhaTotal)
         dataFrameObject["Medalhas de ouro"].append(ouroTotal)
@@ -105,9 +111,10 @@ app.layout = html.Div(
                 html.H1("Medalhas por país", className="title"),
                 html.Section(
                     [
-                        dcc.Dropdown(
+                        dcc.Dropdown(  # FAZ UMA LISTA DOS ANOS
                             id="selectedYear",
-                            options=[{"label": str(ano), "value": ano} for ano in anos],
+                            options=[{"label": str(ano), "value": ano}
+                                     for ano in anos],
                             value=anos[0],
                             style={"width": "200px"},
                         ),
@@ -123,11 +130,11 @@ app.layout = html.Div(
 )
 
 
-@app.callback(
+@app.callback(  # ATUALIZA O GRAFICO CONFORME A ESCOLHA DO USUARIO
     Output(component_id="graph", component_property="figure"),
     [Input(component_id="selectedYear", component_property="value")],
 )
-def updateGraph(selectedYear):
+def updateGraph(selectedYear):  # SELECIONA O ANO
     copy = dataFrameObject.copy()
     df = {
         "sigla": [],
@@ -138,7 +145,7 @@ def updateGraph(selectedYear):
         "Medalhas de bronze": [],
     }
 
-    for index in range(len(copy["ano"])):
+    for index in range(len(copy["ano"])):  # FILTRA OS VALORES DO ANO
         if copy["ano"][index] == selectedYear:
             df["sigla"].append(copy["sigla"][index])
             df["Medalhas totais"].append(copy["Medalhas totais"][index])
@@ -146,7 +153,7 @@ def updateGraph(selectedYear):
             df["Medalhas de prata"].append(copy["Medalhas de prata"][index])
             df["Medalhas de bronze"].append(copy["Medalhas de bronze"][index])
 
-    figure = px.choropleth(
+    figure = px.choropleth(  # GRAFICO
         df,
         locations="sigla",
         color="Medalhas totais",
@@ -157,18 +164,18 @@ def updateGraph(selectedYear):
             "Medalhas de prata",
             "Medalhas de ouro",
         ],
-        width=1200,
-        height=675,
+        width=1200,  # LARGURA
+        height=675,  # ALTURA
     )
 
-    figure.update_geos(
+    figure.update_geos(  # ATUALIZAR AS CARACTERISTICAS DO GRAFICO
         showocean=True,
         coastlinecolor="#610059",
         oceancolor="#b7ddf4",
         landcolor="#f7f8fa",
     )
 
-    return figure
+    return figure  # RETORNA O GRAFICO
 
 
 # ------------------------------------------------------------
