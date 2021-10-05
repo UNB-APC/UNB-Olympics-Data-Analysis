@@ -67,6 +67,7 @@ anos.sort()
 app = Dash(__name__)
 app.layout = html.Div(
   children=[
+    html.H1("IMC por Atleta"),
     dcc.Dropdown(
       id="anoSelecionado",
       options=[{ "label": str(ano), "value": ano } for ano in anos],
