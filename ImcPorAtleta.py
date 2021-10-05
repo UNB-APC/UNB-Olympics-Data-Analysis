@@ -26,6 +26,8 @@ dados = read_csv("dados/athlete_events.csv", delimiter = ",") #ler dados
 dadosUnicosPorPessoa = []
 idsLidosPorAno = {}
 
+# Agrupaento dos dados
+#------------------------------------------------------------
 for linha in dados.values:
   if isnan(linha[4]) or isnan(linha[5]):
     continue
@@ -46,24 +48,36 @@ for linha in dados.values:
 
   dadosUnicosPorPessoa.append({"nome": nome, "imc": imc, "ano": ano})
   idsLidosPorAno[ano].add(id)
+#------------------------------------------------------------
 
+# Ordenação dos dados por IMC
+#------------------------------------------------------------
 dadosUnicosPorPessoa.sort(key=lambda item: item["imc"]) # Ordena o array de acordo com o imc
+#------------------------------------------------------------
 
-agrupadoPorAno = {}
+# Criação do DataFrame
+#------------------------------------------------------------
+dataFrameAgrupadoPorAno = {}
 for dado in dadosUnicosPorPessoa:
   ano = dado["ano"]
   nome = dado["nome"]
   imc = dado["imc"]
 
-  if agrupadoPorAno.get(ano) == None:
-    agrupadoPorAno[ano] = { "nome":[], "imc": []}
+  if dataFrameAgrupadoPorAno.get(ano) == None:
+    dataFrameAgrupadoPorAno[ano] = { "nome":[], "imc": []}
   
-  agrupadoPorAno[ano]["nome"].append(nome)
-  agrupadoPorAno[ano]["imc"].append(imc)
+  dataFrameAgrupadoPorAno[ano]["nome"].append(nome)
+  dataFrameAgrupadoPorAno[ano]["imc"].append(imc)
+#------------------------------------------------------------
 
-anos = list(agrupadoPorAno.keys())
-anos.sort()
+# Ordenação dos anos de forma decrescente
+#------------------------------------------------------------
+anos = list(dataFrameAgrupadoPorAno.keys())
+anos.sort(reverse=True) # Ordena os anos de forma decrescente
+#------------------------------------------------------------
 
+# Criação do layout (vizualização)
+#------------------------------------------------------------
 app = Dash(__name__)
 app.layout = html.Div(
   children=[
@@ -88,7 +102,10 @@ app.layout = html.Div(
     )
   ]
 )
+#------------------------------------------------------------
 
+# Criação do callback (função que é chamada sempre que um dos inputs são alterados)
+#------------------------------------------------------------
 @app.callback(
   Output(component_id="grafico", component_property="figure"),
   [
@@ -97,7 +114,7 @@ app.layout = html.Div(
   ]
 )
 def atualizarGrafico(anoSelecionado, ordemSelecionada):
-  df = agrupadoPorAno[anoSelecionado].copy()
+  df = dataFrameAgrupadoPorAno[anoSelecionado].copy()
   if ordemSelecionada == "menor":
     df["nome"] = df["nome"][0:10]
     df["imc"] = df["imc"][0:10]
@@ -107,5 +124,9 @@ def atualizarGrafico(anoSelecionado, ordemSelecionada):
 
   grafico = px.bar(df, x="nome", y="imc")
   return grafico
+#------------------------------------------------------------
 
+# Rodar o servidor
+#------------------------------------------------------------
 app.run_server(port=3003)
+#------------------------------------------------------------
