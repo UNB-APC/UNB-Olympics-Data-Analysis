@@ -66,7 +66,7 @@ for linha in csvDataFrame.values: # Percorre por cada linha desse array de duas 
 # Listamento de todos os anos
 # ------------------------------------------------------------
 anos = [ano for ano in nocIMCAgrupadoPorAno] # Cria um array de anos para cada ano dentro do dict de dados agrupados por ano
-anos.sort() # Ordena de forma crescente esses anos
+anos.sort(reverse=True) # Ordena de forma decrescente esses anos
 # ------------------------------------------------------------
 
 
