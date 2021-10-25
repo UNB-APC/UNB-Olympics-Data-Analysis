@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 from dash.dependencies import Input, Output
 from dash import Dash, html, dcc
 
+from components import header as DefaultHeader
+
 dados = read_csv("dados/athlete_events.csv", delimiter = ",") 
 #lendo e armazenando dados do arquivo csv
 
@@ -83,18 +85,7 @@ app = Dash(__name__)
 app.layout = html.Div(
     className="container imc-per-country",
     children=[
-        html.Header(
-            children=[
-                html.Img(src="./assets/logo.svg"),
-                html.Div(
-                    children=[
-                        html.Img(src="./assets/left-wings.svg"),
-                        html.H1("Olimpiadas"),
-                        html.Img(src="./assets/rigth-wings.svg"),
-                    ]
-                ),
-            ]
-        ),
+        DefaultHeader,
         html.Main(
             children=[
                 html.H1("Gênero por Ano", className="title"),

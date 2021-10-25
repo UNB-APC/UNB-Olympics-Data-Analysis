@@ -5,6 +5,8 @@ from pandas import read_csv
 import plotly.express as px
 from dash import Dash, html, dcc
 
+from components import header as DefaultHeader
+
 dados = read_csv("dados/athlete_events.csv", delimiter = ",") #ler dados
 
 # "ID"[0],
@@ -80,7 +82,9 @@ anos.sort(reverse=True) # Ordena os anos de forma decrescente
 #------------------------------------------------------------
 app = Dash(__name__)
 app.layout = html.Div(
+  className="container",
   children=[
+    DefaultHeader,
     html.H1("IMC por Atleta"),
     dcc.Dropdown(
       id="anoSelecionado",

@@ -5,6 +5,8 @@ from dash import html
 from dash import dcc
 from dash.dependencies import Input, Output
 
+from components import header as DefaultHeader
+
 # Leitura dos dados
 dados_csv = pd.read_csv("dados/athlete_events.csv")
 
@@ -66,8 +68,10 @@ agrupado_por_ano['Total'] = maiores_medalhistas
 app = Dash(__name__)
 
 app.layout = html.Div(
+            className="container",
             style={'height': '100vh'},
             children = [
+                        DefaultHeader,
                         dcc.Dropdown(
                             id = "ano_selecionado",
                             options = [{"label": str(ano), "value": ano} for ano in anos_ordenados],

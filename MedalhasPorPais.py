@@ -4,6 +4,8 @@ from dash.dependencies import Input, Output
 import plotly.express as px  # MODULO PARA CRIAR O GRAFICO
 from dash import Dash, html, dcc  # IMPORTA A PAGINA WEB
 
+from components import header as DefaultHeader
+
 dados = read_csv(
     "dados/athlete_events.csv",
     delimiter=",",
@@ -93,18 +95,7 @@ app = Dash(__name__)
 app.layout = html.Div(
     className="container imc-per-country",
     children=[
-        html.Header(
-            children=[
-                html.Img(src="./assets/logo.svg"),
-                html.Div(
-                    children=[
-                        html.Img(src="./assets/left-wings.svg"),
-                        html.H1("Olimpiadas"),
-                        html.Img(src="./assets/rigth-wings.svg"),
-                    ]
-                ),
-            ]
-        ),
+        DefaultHeader,
         html.Main(
             children=[
                 html.H1("Medalhas por país", className="title"),

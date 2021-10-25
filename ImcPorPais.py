@@ -4,6 +4,8 @@ from dash.dependencies import Input, Output # Input e Output do callback do Dash
 from pandas import read_csv # função que lê o arquivo csv
 import plotly.express as px # modulo que vamos usar para criar o gráfico
 
+from components import header as DefaultHeader
+
 from dash import Dash, html, dcc # Dash para criar a tela, html para os elementos html e dcc para os componentes do Dash
 
 csvDataFrame = read_csv('dados/athlete_events.csv', delimiter=',') # Leitura dos arquivos
@@ -99,19 +101,7 @@ app = Dash(__name__) # Inicializa a tela do Dash
 app.layout = html.Div( # Cria uma div (elemento html), como elemento raiz do layout 
   className="container imc-per-country", # Define uma classe para a estilização no css
   children=[ # Define os elementos filhos
-    html.Header( # Cria um Header (elemento html) para o site
-      children=[ # Define os elementos filhos
-        html.Img(src="./assets/logo.svg"), # Cria uma img (elemento html) para mostar a logo das olimpiadas
-        html.Div( # Cria uma div (elemento html) para agrupar imagens com texto e formar um elemento só
-          children=[ # Define os elementos filhos
-            html.Img(src="./assets/left-wings.svg"), # Cria uma img (elemento html) para uma "asa" da logo
-            html.H1('Olimpiadas'), # Cria um h1 (elemento html) para colocarmos o título da logo
-            html.Img(src="./assets/rigth-wings.svg"), # Cria uma img (elemento html) para outra "asa" da logo
-          ]
-        )
-      ]
-    ),
-
+    DefaultHeader,
     html.Main( # Cria uma main (elemento html) para criarmos o layout principal
       children=[ # Determina os filhos do elemento main
         html.H1( # Cria um h1 para colocarmos um titulo para o grafico
