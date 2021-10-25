@@ -1,0 +1,64 @@
+.imc-per-country section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  margin-top: 10px;
+}
+
+.imc-per-country g.layer:nth-child(1) > rect:nth-child(1) {
+  fill: #F7F8FA !important;
+}
+
+.imc-per-country .graph-container{
+  display: flex;
+  width: 100%;
+}
+
+.imc-per-country table {
+  width: 100%;
+  min-height: 520px;
+
+  border: 1px solid #555;
+  border-spacing: 0 0.5rem;
+  border-radius: 16px;
+
+  background: #fff;
+}
+
+.imc-per-country th {
+  padding: 1rem 2rem;
+
+  text-align: left;
+  
+  font-weight: 400;
+  line-height: 1rem;
+}
+
+.imc-per-country td {
+  padding: 0.5rem 2rem;
+  vertical-align: top;
+  border: 0;
+
+  font-family: sans-serif;
+}
+
+.imc-per-country div.graph-container h1 {
+  padding: 1rem 2rem;
+}
+
+.imc-per-country .notListedTeams {
+  width: 100%;
+  max-width: 400px;
+  max-height: 520px;
+  margin-left: 1.5rem;
+
+  /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.15); */
+}
+
+.imc-per-country th {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Roboto;
+}

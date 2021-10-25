@@ -81,7 +81,7 @@ app = Dash(__name__)
 #iniciando o dash
 
 app.layout = html.Div(
-    className="container-imc-per-country",
+    className="container imc-per-country",
     children=[
         html.Header(
             children=[

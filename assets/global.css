@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-.container-imc-per-country {
+.container {
   width: 100vw;
   height: 100vh;
 
@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.container-imc-per-country header {
+.container header {
   width: 100vw;
   padding: 20px;
   border-bottom: 1px solid #AFB2B1;
@@ -27,20 +27,20 @@
   color: #001031;
 }
 
-.container-imc-per-country header h1 {
+.container header h1 {
   padding-bottom: 8px;
 }
 
-.container-imc-per-country header img {
+.container header img {
   height: 50px;
 }
 
-.container-imc-per-country header div {
+.container header div {
   display: flex;
   align-items: flex-end;
 }
 
-.container-imc-per-country main {
+.container main {
   width: 100vw;
   height: 100%;
   background-color: #F7F8FA;
@@ -52,73 +52,8 @@
   padding-top: 40px;
 }
 
-.container-imc-per-country main h1 {
+.container main h1 {
   font-family: Roboto;
   padding-bottom: 10px;
   color: #001031;
-}
-
-.container-imc-per-country section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  margin-top: 10px;
-}
-
-.container-imc-per-country g.layer:nth-child(1) > rect:nth-child(1) {
-  fill: #F7F8FA !important;
-}
-
-.container-imc-per-country .graph-container{
-  display: flex;
-  width: 100%;
-}
-
-.container-imc-per-country table {
-  width: 100%;
-  min-height: 520px;
-
-  border: 1px solid #555;
-  border-spacing: 0 0.5rem;
-  border-radius: 16px;
-
-  background: #fff;
-}
-
-.container-imc-per-country th {
-  padding: 1rem 2rem;
-
-  text-align: left;
-  
-  font-weight: 400;
-  line-height: 1rem;
-}
-
-.container-imc-per-country td {
-  padding: 0.5rem 2rem;
-  vertical-align: top;
-  border: 0;
-
-  font-family: sans-serif;
-}
-
-.container-imc-per-country div.graph-container h1 {
-  padding: 1rem 2rem;
-}
-
-.container-imc-per-country .notListedTeams {
-  width: 100%;
-  max-width: 400px;
-  max-height: 520px;
-  margin-left: 1.5rem;
-
-  /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.15); */
-}
-
-.container-imc-per-country th {
-  font-size: 20px;
-  font-weight: 400;
-  font-family: Roboto;
 }
