@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-.container-imc-per-country {
+.container {
   width: 100vw;
   height: 100vh;
 
@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.container-imc-per-country header {
+.container header {
   width: 100vw;
   padding: 20px;
   border-bottom: 1px solid #AFB2B1;
@@ -27,20 +27,20 @@
   color: #001031;
 }
 
-.container-imc-per-country header h1 {
+.container header h1 {
   padding-bottom: 8px;
 }
 
-.container-imc-per-country header img {
+.container header img {
   height: 50px;
 }
 
-.container-imc-per-country header div {
+.container header div {
   display: flex;
   align-items: flex-end;
 }
 
-.container-imc-per-country main {
+.container main {
   width: 100vw;
   height: 100%;
   background-color: #F7F8FA;
@@ -52,7 +52,7 @@
   padding-top: 40px;
 }
 
-.container-imc-per-country main h1 {
+.container main h1 {
   font-family: Roboto;
   padding-bottom: 10px;
   color: #001031;

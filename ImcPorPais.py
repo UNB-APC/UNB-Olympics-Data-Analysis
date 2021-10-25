@@ -97,7 +97,7 @@ for ano in anos: # Percorre todos os anos do array de anos
 app = Dash(__name__) # Inicializa a tela do Dash
 
 app.layout = html.Div( # Cria uma div (elemento html), como elemento raiz do layout 
-  className="container-imc-per-country", # Define uma classe para a estilização no css
+  className="container imc-per-country", # Define uma classe para a estilização no css
   children=[ # Define os elementos filhos
     html.Header( # Cria um Header (elemento html) para o site
       children=[ # Define os elementos filhos
@@ -198,8 +198,8 @@ def atualizarGrafico(anoSelecionado): # Função que atualiza o grafico, será c
   )
 
   layout = grafico.layout
-  layout["paper_bgcolor"] = "#F7F8FA"
-  layout["plot_bgcolor"] = "#F7F8FA"
+  layout.paper_bgcolor = "#F7F8FA"
+  layout.plot_bgcolor = "#F7F8FA"
 
   timesNaoListados = []
   for index in range(len(df["time"])):

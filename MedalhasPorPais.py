@@ -91,7 +91,7 @@ for ano in anos:  # PERCORRE CADA ANO
 app = Dash(__name__)
 
 app.layout = html.Div(
-    className="container-imc-per-country",
+    className="container imc-per-country",
     children=[
         html.Header(
             children=[
