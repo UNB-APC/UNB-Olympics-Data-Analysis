@@ -67,24 +67,43 @@ agrupado_por_ano['Total'] = maiores_medalhistas
 
 app = Dash(__name__)
 
-app.layout = html.Div(
-            className="container",
-            style={'height': '100vh'},
+app.layout = html.Main(
+            className="medalhasPorAtleta",
             children = [
-                        DefaultHeader,
+                html.Header(
+                    children = [
+                        html.Img(src="./assets/logo.svg"),
+                        html.Div(
+                            children=[
+                                html.Img(src="./assets/left-wings.svg"),
+                                html.H1('Medalhas por Atleta'),
+                                html.Img(src="./assets/rigth-wings.svg"),
+                            ]
+                        ),
+                        html.Img(src="./assets/medalhas.svg")
+                    ]                               
+                ),
+                html.Section(
+                    children = [
                         dcc.Dropdown(
+                            className="drop",
                             id = "ano_selecionado",
                             options = [{"label": str(ano), "value": ano} for ano in anos_ordenados],
                             value = anos_ordenados[0],
                             style = {"width": "100px"}
                         ),
                         dcc.Graph(
+                            className="grafico",
                             id = "grafico",
                             figure = [],
-                            style = {'height' : '95%','width': '100%'}        
-                        )
+                                    
+                        ),
                     ]
-        )
+                    
+                )
+            ]
+        )              
+
 
 
 @app.callback(
@@ -111,8 +130,7 @@ def atualizar_grafico(ano_selecionado):
     
 
     figure = px.bar(
-            df,
-            title ="Olimpíadas - Medalhas por atleta",  
+            df,  
             x = 'nome',
             y = ['Gold','Silver','Bronze'], 
             color_discrete_map = {'Gold':'gold', 'Silver':'silver', 'Bronze':'rgb(148,93,65)'},                    
